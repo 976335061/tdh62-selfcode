@@ -33,6 +33,10 @@ void outputline();
 int checkstate();
 int getchoose();
 void mainpage();
+int newstudent();
+int newsocks();
+int getsocks();
+int getout();
 //变量声明
 static char emptyc=' ';
 static int i,j,k;
@@ -144,9 +148,36 @@ void mainpage(){
 		}
 		else nowselect=keyCode-48;
 	}
+	//选择结束
+	if(nowselect==0){
+		exit(0);
+	}
+	if(nowselect==1){
+		newstudent();
+	}
+	if(nowselect==2){
+		newsocks();
+	}
+	if(nowselect==3){
+		getsocks();
+	}
+	if(nowselect==4){
+		getout();
+	}
 } 
-
-
+//正式处理数据
+int newstudent(){
+	return 0;
+}
+int newsocks(){
+	return 0;
+}
+int getsocks(){
+	return 0;
+}
+int getout(){
+	return 0;
+}
 
 //清空屏幕上所有内容
 int clear(){
