@@ -41,6 +41,19 @@ int getout();
 static char emptyc=' ';
 static int i,j,k;
 static int choosetype,choose;//对于是否选择，选择1：是，选择2：否，
+//student infomation
+struct student {
+	int id;
+	char name[20];
+	char sex[2];
+}stu[100];
+struct socks{
+	char s1[5];
+	char s2[5];
+	char s3[5];
+}soc[100];
+
+
 //End
 //主函数，通过主函数实现主要功能
 void main (){
@@ -112,6 +125,7 @@ int welcome(int wtype){
 void mainpage(){
 	char keyCode;
 	int nowselect=1,q=1;
+	remain:
 	for(;;){
 	clear();
 	q=nowselect;
