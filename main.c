@@ -146,7 +146,9 @@ void mainpage(){
 		else if(keyCode==13){
 			break;
 		}
-		else nowselect=keyCode-48;
+		else if(keyCode-48<=5 &&keyCode-48>=0){
+			nowselect=keyCode-48;
+		}
 	}
 	//选择结束
 	if(nowselect==0){
@@ -164,6 +166,7 @@ void mainpage(){
 	if(nowselect==4){
 		getout();
 	}
+	goto remain;//懒得用循环、、、稍稍用一次goto吧QwQ
 } 
 //正式处理数据
 int newstudent(){
