@@ -197,7 +197,6 @@ int newstudent(){
 	oldlastaddst=lastaddst;
 	for(i=lastaddst;i<=100;i++){
 		printf("\n\n\t\t\t录入学生信息：\n\n");
-		printf("\n\n\t\t录入过程中出现错误请输入EOF取消当前录入\n\n");
 		printf("\t学号：");
 		scanf("%s",stu[i].id);
 		fflush(stdin);
@@ -258,3 +257,4 @@ void outputline(){
 int checkstate(){
 	return 55;
 }
+ 
