@@ -41,16 +41,18 @@ int getout();
 static char emptyc=' ';
 static int i,j,k;
 static int choosetype,choose;//对于是否选择，选择1：是，选择2：否，
+#define stulen1 20
 //student infomation
 struct student {
 	int id;
-	char name[20];
-	char sex[2];
+	char id2[stulen1];
+	char name[stulen1];
+	char sex[stulen1];
 }stu[100];
 struct socks{
-	char s1[5];
-	char s2[5];
-	char s3[5];
+	char s1[stulen1];
+	char s2[stulen1];
+	char s3[stulen1];
 }soc[100];
 
 
@@ -184,7 +186,10 @@ void mainpage(){
 } 
 //正式处理数据
 int newstudent(){
-	return 0;
+	scanf("%s",stu[1].name);
+	printf("%s",stu[1].name);
+
+	exit(0);
 }
 int newsocks(){
 	return 0;
