@@ -39,20 +39,19 @@ int getsocks();
 int getout();
 //变量声明
 static char emptyc=' ';
-static int i,j,k;
+static int i,j,k,lastaddst=0;
 static int choosetype,choose;//对于是否选择，选择1：是，选择2：否，
-#define stulen1 20
+#define studentidlen 40
+#define studentnamelen 20
 //student infomation
 struct student {
-	int id;
-	char id2[stulen1];
-	char name[stulen1];
-	char sex[stulen1];
+	char id[studentidlen];
+	char name[studentnamelen];
 }stu[100];
 struct socks{
-	char s1[stulen1];
-	char s2[stulen1];
-	char s3[stulen1];
+	int soc1;
+	int soc2;
+	int soc3;
 }soc[100];
 
 
@@ -186,10 +185,27 @@ void mainpage(){
 } 
 //正式处理数据
 int newstudent(){
-	scanf("%s",stu[1].name);
-	printf("%s",stu[1].name);
+	clear();
+	printf("\n\n\t本程序最多允许录入100名学生信息。按任意键继续或N返回主页面");
+	if(getchoose(3)!=1){
+		return 0;
+	}
+	clear();
+	
+	for(i=lastaddst;i<=100;i++){
+		printf("\n\n\t录入学生信息：\n\n");
+		printf("\t学号：");
+		scanf("%s",stu[i].id);
+		printf("\t姓名：");
+		scanf("%s",stu[i].name);
+		lastaddst=i;
+		printf("录入成功，按任意键继续或按N返回主页面");
+		if(getchoose(3)!=1){
+			break;
+		}
+	}
+		return 0;
 
-	exit(0);
 }
 int newsocks(){
 	return 0;
@@ -207,7 +223,15 @@ int clear(){
 	return 1;
 }
 int getchoose(int t){
-	return 1;
+	if(t==3){
+		char ch;
+		ch=getchar();
+		if(ch!='n' || ch!='N'){
+			return 1;
+		}
+		else return 0;
+	}
+	else return 1;
 }
 //方便output
 void outputline(){
