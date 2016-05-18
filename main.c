@@ -146,7 +146,7 @@ void mainpage(){
 		else if(keyCode==13){
 			break;
 		}
-		else if(keyCode-48<=5 &&keyCode-48>=0){
+		else if(keyCode-48<5 &&keyCode-48>=0){
 			nowselect=keyCode-48;
 		}
 	}
