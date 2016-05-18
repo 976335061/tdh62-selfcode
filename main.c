@@ -209,13 +209,14 @@ int newstudent(){
 			break;
 		}
 		clear();
-		printf("---------------------------------\n");
-		printf("|\t学号\t|\t姓名\t|\n");
-		printf("---------------------------------\n");
+		printf("\t\t\t本次录入的学生信息\n\n");
+		printf("\t\t----------------+----------------\n");
+		printf("\t\t|\t学号\t+\t姓名\t|\n");
+		printf("\t\t|---------------+---------------|\n");
 		for(j=oldlastaddst;j<=i;j++){
-			printf("|\t%s\t|\t%s\t|\n",stu[j].id,stu[j].name);
+			printf("\t\t|\t%s\t+\t%s\t|\n",stu[j].id,stu[j].name);
 		}
-		printf("---------------------------------\n");
+		printf("\t\t----------------+----------------\n");
 	}
 		return 0;
 
@@ -257,4 +258,3 @@ void outputline(){
 int checkstate(){
 	return 55;
 }
- 
