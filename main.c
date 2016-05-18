@@ -126,83 +126,97 @@ int welcome(int wtype){
 void mainpage(){
 	char keyCode;
 	int nowselect=1,q=1;
-	remain:
 	for(;;){
-	clear();
-	q=nowselect;
-	if(q==1)
-		printf("\n\n\n\t\t\t<---    1.录入学生信息\t--->\n\n\n");
-	else
-		printf("\n\n\n\t\t\t\t1.录入学生信息\n\n\n");
-	if(q==2)
-		printf("\t\t\t<---    2.输入学生成绩\t--->\n\n\n");
-	else 
-		printf("\t\t\t\t2.输入学生成绩\n\n\n");
-	if(q==3)
-		printf("\t\t\t<---    3.查看成绩\t--->\n\n\n");
-	else 
-		printf("\t\t\t\t3.查看成绩\n\n\n");
-	if(q==4)
-		printf("\t\t\t<---    4.查看统计报表\t--->\n\n\n");
-	else
-		printf("\t\t\t\t4.查看统计报表\n\n\n");
-	if(q==0)
-		printf("\t\t\t<---    0.退出程序\t--->\n\n\n");
-	else
-		printf("\t\t\t\t0.退出程序\n\n\n");
-	printf("通过Tab可以切换或直接输入数字，按下Enter来确认选择");
-		keyCode=getch();
-		if(keyCode==9){
-			if(nowselect==4)
-				nowselect=0;
-			else
-				nowselect=nowselect+1;
+			for(;;){
+		clear();
+		q=nowselect;
+		if(q==1)
+			printf("\n\n\n\t\t\t<---    1.录入学生信息\t--->\n\n\n");
+		else
+			printf("\n\n\n\t\t\t\t1.录入学生信息\n\n\n");
+		if(q==2)
+			printf("\t\t\t<---    2.输入学生成绩\t--->\n\n\n");
+		else 
+			printf("\t\t\t\t2.输入学生成绩\n\n\n");
+		if(q==3)
+			printf("\t\t\t<---    3.查看成绩\t--->\n\n\n");
+		else 
+			printf("\t\t\t\t3.查看成绩\n\n\n");
+		if(q==4)
+			printf("\t\t\t<---    4.查看统计报表\t--->\n\n\n");
+		else
+			printf("\t\t\t\t4.查看统计报表\n\n\n");
+		if(q==0)
+			printf("\t\t\t<---    0.退出程序\t--->\n\n\n");
+		else
+			printf("\t\t\t\t0.退出程序\n\n\n");
+		printf("通过Tab可以切换或直接输入数字，按下Enter来确认选择");
+			keyCode=getch();
+			if(keyCode==9){
+				if(nowselect==4)
+					nowselect=0;
+				else
+					nowselect=nowselect+1;
+				}
+			else if(keyCode==13){
+				break;
 			}
-		else if(keyCode==13){
-			break;
+			else if(keyCode-48<5 &&keyCode-48>=0){
+				nowselect=keyCode-48;
+			}
 		}
-		else if(keyCode-48<5 &&keyCode-48>=0){
-			nowselect=keyCode-48;
+		//选择结束
+		if(nowselect==0){
+			exit(0);
+		}
+		if(nowselect==1){
+			newstudent();
+		}
+		if(nowselect==2){
+			newsocks();
+		}
+		if(nowselect==3){
+			getsocks();
+		}
+		if(nowselect==4){
+			getout();
 		}
 	}
-	//选择结束
-	if(nowselect==0){
-		exit(0);
-	}
-	if(nowselect==1){
-		newstudent();
-	}
-	if(nowselect==2){
-		newsocks();
-	}
-	if(nowselect==3){
-		getsocks();
-	}
-	if(nowselect==4){
-		getout();
-	}
-	goto remain;//懒得用循环、、、稍稍用一次goto吧QwQ
 } 
 //正式处理数据
 int newstudent(){
+	int oldlastaddst;
 	clear();
+	
 	printf("\n\n\t本程序最多允许录入100名学生信息。按任意键继续或N返回主页面");
+
 	if(getchoose(3)!=1){
 		return 0;
 	}
 	clear();
-	
+	oldlastaddst=lastaddst;
 	for(i=lastaddst;i<=100;i++){
-		printf("\n\n\t录入学生信息：\n\n");
+		printf("\n\n\t\t\t录入学生信息：\n\n");
+		printf("\n\n\t\t录入过程中出现错误请输入EOF取消当前录入\n\n");
 		printf("\t学号：");
 		scanf("%s",stu[i].id);
+		fflush(stdin);
 		printf("\t姓名：");
 		scanf("%s",stu[i].name);
+		fflush(stdin);
 		lastaddst=i;
-		printf("录入成功，按任意键继续或按N返回主页面");
-		if(getchoose(3)!=1){
+		printf("\n\t录入成功，按任意键继续或按N返回主页面");
+		if(getchoose(3)==0){
 			break;
 		}
+		clear();
+		printf("---------------------------------\n");
+		printf("|\t学号\t|\t姓名\t|\n");
+		printf("---------------------------------\n");
+		for(j=oldlastaddst;j<=i;j++){
+			printf("|\t%s\t|\t%s\t|\n",stu[j].id,stu[j].name);
+		}
+		printf("---------------------------------\n");
 	}
 		return 0;
 
@@ -226,7 +240,8 @@ int getchoose(int t){
 	if(t==3){
 		char ch;
 		ch=getchar();
-		if(ch!='n' || ch!='N'){
+		fflush(stdin);
+		if(ch!='n' && ch!='N'){
 			return 1;
 		}
 		else return 0;
