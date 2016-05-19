@@ -138,9 +138,9 @@ void mainpage(){
 		else
 			printf("\n\n\n\t\t\t1.录入学生信息\n\n\n");
 		if(q==2)
-			printf("\t\t<---    2.输入学生成绩\t\t--->\n\n\n");
+			printf("\t\t<---    2.批量录入成绩\t\t--->\n\n\n");
 		else 
-			printf("\t\t\t2.输入学生成绩\n\n\n");
+			printf("\t\t\t2.批量录入成绩\n\n\n");
 		if(q==3)
 			printf("\t\t<---    3.查看成绩\t\t--->\n\n\n");
 		else 
@@ -150,9 +150,9 @@ void mainpage(){
 		else
 			printf("\t\t\t4.查看统计报表\n\n\n");
 		if(q==5)
-			printf("\t\t<---    5.学生数据查询更改\t\t--->\n\n\n");
+			printf("\t\t<---    5.数据查询更改\t\t--->\n\n\n");
 		else
-			printf("\t\t\t5.学生数据查询更改\n\n\n");
+			printf("\t\t\t5.数据查询更改\n\n\n");
 		if(q==0)
 			printf("\t\t<---    0.退出程序\t--->\n\n\n");
 		else
