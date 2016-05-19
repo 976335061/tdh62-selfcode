@@ -315,54 +315,53 @@ int changest(int a){
 	int nowselect=0;
 	char keyCode;
 		for(;;){
-		clear();
-		printf("\n\n\t\t\t将修改学生信息：\n\n");
-		printf("\t\t|\t%s\t+\t%s\t|\n",stu[a].id,stu[a].name);
-		printf("请选择需要更改的内容，按回车确认，选择取消放弃更改\n");
-		if(nowselect==0)
-			printf("    ===> 取消更改  <===\n");
-		else
-			printf("\t 取消更改\n");
-		if(nowselect==1)
-			printf("    ===>学号：%s   <===\n",stu[a].id);
-		else
-			printf("\t学号：%s\n",stu[a].id);
-		if(nowselect==2)
-			printf("    ===>姓名：%s   <===\n",stu[a].name);
-		else
-			printf("\t姓名：%s\n",stu[a].name);
-	fflush(stdin);
-	keyCode=getch();
-	if(keyCode==13){
-			printf("\n请输入更改后的信息");
-			fflush(stdin);
+			clear();
+			printf("\n\n\t\t\t将修改学生信息：\n\n");
+			printf("\t\t|\t%s\t+\t%s\t|\n",stu[a].id,stu[a].name);
+			printf("请选择需要更改的内容，按回车确认，选择取消放弃更改\n");
 			if(nowselect==0)
-				return 0;
+				printf("    ===> 取消更改  <===\n");
+			else
+				printf("\t 取消更改\n");
 			if(nowselect==1)
-				scanf("%s",stu[a].id);
+				printf("    ===>学号：%s   <===\n",stu[a].id);
+			else
+				printf("\t学号：%s\n",stu[a].id);
 			if(nowselect==2)
-				scanf("%s",stu[a].name);
-			break;
-		}
-		else if(keyCode==-32){
+				printf("    ===>姓名：%s   <===\n",stu[a].name);
+			else
+				printf("\t姓名：%s\n",stu[a].name);
+			fflush(stdin);
 			keyCode=getch();
-			if(keyCode==72)
+			if(keyCode==13){
+				printf("\n请输入更改后的信息");
+				fflush(stdin);
 				if(nowselect==0)
-					nowselect=2;
-				else 
-					nowselect=nowselect-1;
-				if(keyCode==80)
-					if(nowselect==2)
-						nowselect=0;
-					else nowselect=nowselect+1;
+					return 0;
+				if(nowselect==1)
+					scanf("%s",stu[a].id);
+				if(nowselect==2)
+					scanf("%s",stu[a].name);
+				break;
+			}
+			else if(keyCode==-32){
+				keyCode=getch();
+				if(keyCode==72)
+					if(nowselect==0)
+						nowselect=2;
+					else 
+						nowselect=nowselect-1;
+					if(keyCode==80)
+						if(nowselect==2)
+							nowselect=0;
+						else nowselect=nowselect+1;
+			}
 		}
-		}
-		clear();
-		printf("修改成功,按任意键返回");
-		fflush(stdin);
-		getch();
-		return 0;
-
+	clear();
+	printf("修改成功,按任意键返回");
+	fflush(stdin);
+	getch();
+	return 0;
 }
 
 
