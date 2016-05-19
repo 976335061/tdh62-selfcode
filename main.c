@@ -150,7 +150,8 @@ void mainpage(){
 			printf("\t\t\t<---    0.退出程序\t--->\n\n\n");
 		else
 			printf("\t\t\t\t0.退出程序\n\n\n");
-		printf("通过Tab可以切换或直接输入数字，按下Enter来确认选择");
+		printf("通过Tab和方向键可以轮换选择或直接输入数字，按下Enter来确认选择");
+		fflush(stdin);
 			keyCode=getch();
 			if(keyCode==9){
 				if(nowselect==4)
@@ -160,6 +161,18 @@ void mainpage(){
 				}
 			else if(keyCode==13){
 				break;
+			}
+			else if(keyCode==-32){
+				keyCode=getch();
+				if(keyCode==72)
+					if(nowselect==0)
+						nowselect=4;
+					else 
+						nowselect=nowselect-1;
+				if(keyCode==80)
+					if(nowselect==4)
+						nowselect=0;
+					else nowselect=nowselect+1;
 			}
 			else if(keyCode-48<5 &&keyCode-48>=0){
 				nowselect=keyCode-48;
