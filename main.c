@@ -2,6 +2,7 @@
 方便自己编写程序的一些小东西
 welcome里wtype=1--首次运行程序
 wtpye!=1--重新加载欢迎页面
+conio.h --getch()来获得按键
 state（从checkstate设定）=1--没有录入学生信息
 （从newstudentinfo设定）=2--刚刚重新录入了学生信息
 传递给getchoose=1取得数字选择
@@ -261,7 +262,7 @@ int getchoose(int t){
 	}
 	else return 1;
 }
-//方便output
+//output
 void outputline(){
 	for(i=0;i<79;i++){
 		printf("*");
