@@ -44,7 +44,7 @@ int socksadd1(int a);
 int socksadd1c();
 int socksadd2();
 //变量声明
-static char emptyc=' ',socname[5][100]={0};
+static char emptyc=' ',socname[6][100]={0};
 static int i,j,k,lastaddst=0,stunull=1;
 static int choosetype,choose;//对于是否选择，选择1：是，选择2：否，
 #define studentidlen 100
@@ -53,10 +53,9 @@ static int choosetype,choose;//对于是否选择，选择1：是，选择2：�
 struct student {
 	char id[studentidlen];
 	char name[studentnamelen];
+    int so[5];
 }stu[100];
-struct socks{
-	int so[5];
-}soc[100];
+
 
 
 //End
@@ -86,6 +85,15 @@ int welcome(int wtype){
 			printf(">\r%15c正在加载中<",emptyc);
 		}//造成真的在加载的错觉,日后增加文件操作可在这完成
 		printf("\n%34c加载完成！\n",emptyc);
+		
+		//初始化成绩
+		for(i=0;i<=100;i++){
+			for(j=0;j<=5;j++){
+				stu[i].so[j]=0;
+			}
+		}
+		//Sleep
+		
 		Sleep(1500);
 		clear();
 	}//首次加载
@@ -256,7 +264,7 @@ int newsocks(){
 	char keyCode;
 	for(;;){
 		clear();
-
+		
 		if(nowselect==1)
 			printf("\n\n\n\t\t<---    1.单门学科成绩录入\t\t--->\n\n\n");
 		else
@@ -291,13 +299,13 @@ int newsocks(){
 		return 0;
 	}
 	else if(nowselect==1)
-			socksadd1c();
-		else
-			socksadd2();
+		socksadd1c();
+	else
+		socksadd2();
 	return 0;
 }
 int socksadd1c(){
-
+	
 	//------------------------------------------------------------------------------------------------------
 	int nowselect=1,q=1;
 	char keyCode;
@@ -316,72 +324,72 @@ int socksadd1c(){
 				printf("\t\t--->\n\n\n");}
 			else{
 				printf("\n\n\n\t\t\t1.");
-			if(socname[1][0]!='\0')
-				printf("%s",socname[1]);
-			else
-				printf("[空]");
-			printf("\n\n\n");}
+				if(socname[1][0]!='\0')
+					printf("%s",socname[1]);
+				else
+					printf("[空]");
+				printf("\n\n\n");}
 			if(q==2){
 				printf("\t\t<---    2.");
-			if(socname[2][0]!='\0')
-				printf("%s",socname[2]);
-			else
-				printf("[空]");
-			printf("\t\t--->\n\n\n");}
+				if(socname[2][0]!='\0')
+					printf("%s",socname[2]);
+				else
+					printf("[空]");
+				printf("\t\t--->\n\n\n");}
 			else {
 				printf("\t\t\t2.");
-			if(socname[2][0]!='\0')
-				printf("%s",socname[2]);
-			else
-				printf("[空]");
-			printf("\n\n\n");}
+				if(socname[2][0]!='\0')
+					printf("%s",socname[2]);
+				else
+					printf("[空]");
+				printf("\n\n\n");}
 			if(q==3){
 				printf("\t\t<---    3.");
-			if(socname[3][0]!='\0')
-				printf("%s",socname[3]);
-			else
-				printf("[空]");
-			printf("\t\t--->\n\n\n");}
+				if(socname[3][0]!='\0')
+					printf("%s",socname[3]);
+				else
+					printf("[空]");
+				printf("\t\t--->\n\n\n");}
 			else {
 				printf("\t\t\t3.");
-			if(socname[3][0]!='\0')
-				printf("%s",socname[3]);
-			else
-				printf("[空]");
-			printf("\n\n\n");}
+				if(socname[3][0]!='\0')
+					printf("%s",socname[3]);
+				else
+					printf("[空]");
+				printf("\n\n\n");}
 			if(q==4){
 				printf("\t\t<---    4.");
-			if(socname[4][0]!='\0')
-				printf("%s",socname[4]);
-			else
-				printf("[空]");
-			printf("\t\t--->\n\n\n");}
+				if(socname[4][0]!='\0')
+					printf("%s",socname[4]);
+				else
+					printf("[空]");
+				printf("\t\t--->\n\n\n");}
 			else{
 				printf("\t\t\t4.");
-			if(socname[4][0]!='\0')
-				printf("%s",socname[4]);
-			else
-				printf("[空]");
-			printf("\n\n\n");}
+				if(socname[4][0]!='\0')
+					printf("%s",socname[4]);
+				else
+					printf("[空]");
+				printf("\n\n\n");}
 			if(q==5){
 				printf("\t\t<---    5.");
-			if(socname[5][0]!='\0')
-				printf("%s",socname[5]);
-			else
-				printf("[空]");
-			printf("\t\t--->\n\n\n");}
+				if(socname[5][0]!='\0')
+					printf("%s",socname[5]);
+				else
+					printf("[空]");
+				printf("\t\t--->\n\n\n");}
 			else{
 				printf("\t\t\t5.");
-			if(socname[5][0]!='\0')
-				printf("%s",socname[5]);
-			else
-				printf("[空]");
-			printf("\n\n\n");}
+				if(socname[5][0]!='\0')
+					printf("%s",socname[5]);
+				else
+					printf("[空]");
+				printf("\n\n\n");}
 			if(q==0)
 				printf("\t\t<---    0.退出录入\t--->\n\n\n");
 			else
 				printf("\t\t\t0.退出录入\n\n\n");
-			printf("通过Tab和方向键可以轮换选择或直接输入数字，按下Enter来确认选择");
+			printf("通过Tab和方向键可以轮换选择或直接输入数字，按下Enter来确认选择\n注意：一旦您选择了批量录入，请录入全部的信息,如需更改，请使用数据查询更改功能。");
 			fflush(stdin);
 			keyCode=getch();
 			if(keyCode==9){
@@ -429,45 +437,47 @@ int socksadd1c(){
 			socksadd1(5);
 		}
 	}
-
-
-
+	
+	
+	
 	//------------------------------------------------------------------------------------------------------
 	system("color f9");
 	return 0;
 }
 int socksadd1(int st){
-	int nowinput=0;
+	int gsoc;
 	clear();
 	if(socname[st][0]=='\0'){
-	printf("\n您还没有为该成绩确定名称，请输入名称：");
-	scanf("%s",socname[st]);
+		printf("\n您还没有为该成绩确定名称，请输入名称：");
+		scanf("%s",socname[st]);
+		fflush(stdin);
+		printf("\n是否继续录入成绩？任意键来确定或输入N取消");
+		if(getchoose(3)==0)
+			return 0;
 	}
 	//===========================================================================================
-
-		clear();
-		printf("\t\t请直接输入对应学生的成绩\n");
-		printf("\t----------------+---------------+---------------|\n");
-		printf("\t|\t学号\t+\t姓名\t|\t");
-		printf("%s",socname[st]);
-		printf("\t|\n");
-		printf("\t|---------------+---------------+---------------|\n");
-		for(j=0;j<=lastaddst;j++){
-			if(j!=nowinput)
-				printf("\t|\t%s\t+\t%s\t|\t%d\t|\n",stu[j].id,stu[j].name,soc[j].so[st]);
-			else{
-				printf("\t|\t%s\t+\t%s\t|\t",stu[j].id,stu[j].name);
-				fflush(stdin);
-				scanf("%d",soc[j].so[st]);
-		}
-		}
-		printf("\t----------------+---------------+----------------\n");
-		printf("\n\t全部录入完成,按任意键返回");
+	
+	clear();
+	printf("\t\t请直接输入对应学生的成绩\n");
+	printf("\t----------------+---------------+---------------|\n");
+	printf("\t|\t学号\t+\t姓名\t|\t");
+	printf("%s",socname[st]);
+	printf("\t|\n");
+	printf("\t|---------------+---------------+---------------|\n");
+	for(j=0;j<=lastaddst;j++){
+		
+		printf("\t|\t%s\t+\t%s\t|\t",stu[j].id,stu[j].name);
 		fflush(stdin);
-		getch();
-		return 0;
+		scanf("%d",&gsoc);
+		stu[j].so[st] = gsoc;
+	}
+	printf("\t----------------+---------------+----------------\n");
+	printf("\n\t全部录入完成,按任意键返回");
+	fflush(stdin);
+	getch();
+	return 0;
 	//===========================================================================================
-
+	
 }
 int socksadd2(){
 	return 0;
@@ -536,7 +546,7 @@ int checkchange(){
 }
 //信息修改
 int changest(int a){
-	int nowselect=0;
+	int nowselect=0,all=2,gsoc;
 	char keyCode;
 	for(;;){
 		clear();
@@ -555,6 +565,31 @@ int changest(int a){
 			printf("    ===>姓名：%s   <===\n",stu[a].name);
 		else
 			printf("\t姓名：%s\n",stu[a].name);
+		if(nowselect==3)
+			printf("    ===>%s：%d   <===\n",socname[1],stu[a].so[1]);
+		else
+			printf("\t%s：%d\n",socname[1],stu[a].so[1]);
+		if(nowselect==4)
+			printf("    ===>%s：%d   <===\n",socname[2],stu[a].so[2]);
+		else
+			printf("\t%s：%d\n",socname[2],stu[a].so[2]);
+		if(nowselect==5)
+			printf("    ===>%s：%d   <===\n",socname[3],stu[a].so[3]);
+		else
+			printf("\t%s：%d\n",socname[3],stu[a].so[3]);
+		if(nowselect==6)
+			printf("    ===>%s：%d   <===\n",socname[4],stu[a].so[4]);
+		else
+			printf("\t%s：%d\n",socname[4],stu[a].so[4]);
+		if(nowselect==7)
+			printf("    ===>%s：%d   <===\n",socname[5],stu[a].so[5]);
+		else
+			printf("\t%s：%d\n",socname[5],stu[a].so[5]);
+		
+		
+		
+		
+		///////////////////////////////////////////////////////////////////////////////////////////////
 		fflush(stdin);
 		keyCode=getch();
 		if(keyCode==13){
@@ -566,17 +601,77 @@ int changest(int a){
 				scanf("%s",stu[a].id);
 			if(nowselect==2)
 				scanf("%s",stu[a].name);
+			if(nowselect==3){
+				if(socname[1][0]=='\0'){
+					printf("\n您还没有为该成绩确定名称，请输入名称：");
+					scanf("%s",socname[1]);
+					fflush(stdin);
+					clear();
+					printf("\n请输入更改后的信息:");
+				}
+				fflush(stdin);
+				scanf("%d",&gsoc);
+				stu[a].so[1] = gsoc;
+			}
+			if(nowselect==4){
+				if(socname[2][0]=='\0'){
+					printf("\n您还没有为该成绩确定名称，请输入名称：");
+					fflush(stdin);
+					scanf("%s",socname[2]);
+					fflush(stdin);
+					clear();
+					printf("\n请输入更改后的信息:");
+				}
+				scanf("%d",&gsoc);
+				stu[a].so[2] = gsoc;
+			}
+			if(nowselect==5){
+				if(socname[3][0]=='\0'){
+					printf("\n您还没有为该成绩确定名称，请输入名称：");
+					fflush(stdin);
+					scanf("%s",socname[3]);
+					fflush(stdin);
+					clear();
+					printf("\n请输入更改后的信息:");
+				}
+				scanf("%d",&gsoc);
+				stu[a].so[3] = gsoc;
+			}
+			if(nowselect==6){
+				if(socname[4][0]=='\0'){
+					printf("\n您还没有为该成绩确定名称，请输入名称：");
+					fflush(stdin);
+					scanf("%s",socname[4]);
+					fflush(stdin);
+					clear();
+					printf("\n请输入更改后的信息:");
+				}
+				scanf("%d",&gsoc);
+				stu[a].so[4] = gsoc;
+			}
+			if(nowselect==7){
+				if(socname[5][0]=='\0'){
+					printf("\n您还没有为该成绩确定名称，请输入名称：");
+					fflush(stdin);
+					scanf("%s",socname[5]);
+					fflush(stdin);
+					clear();
+					printf("\n请输入更改后的信息:");
+				}
+				scanf("%d",&gsoc);
+				stu[a].so[5] = gsoc;
+			}
 			break;
 		}
 		else if(keyCode==-32){
 			keyCode=getch();
 			if(keyCode==72)
 				if(nowselect==0)
-					nowselect=2;
+					nowselect=7;
 				else 
 					nowselect=nowselect-1;
 				if(keyCode==80)
-					if(nowselect==2)
+					if(nowselect==7)
 						nowselect=0;
 					else nowselect=nowselect+1;
 		}
@@ -597,6 +692,7 @@ int clear(){
 int getchoose(int t){
 	if(t==3){
 		char ch;
+		fflush(stdin);
 		ch=getchar();
 		fflush(stdin);
 		if(ch!='n' && ch!='N'){
