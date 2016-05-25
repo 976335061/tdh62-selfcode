@@ -40,10 +40,11 @@ int getsocks();
 int getout();
 int checkchange();
 int changest(int a);
-int socksadd1();
+int socksadd1(int a);
+int socksadd1c();
 int socksadd2();
 //变量声明
-static char emptyc=' ',socname1[100]={0},socname2[100]={0},socname3[100]={0},socname4[100]={0},socname5[100]={0};
+static char emptyc=' ',socname[5][100]={0};
 static int i,j,k,lastaddst=0,stunull=1;
 static int choosetype,choose;//对于是否选择，选择1：是，选择2：否，
 #define studentidlen 100
@@ -54,11 +55,7 @@ struct student {
 	char name[studentnamelen];
 }stu[100];
 struct socks{
-	int soc1;
-	int soc2;
-	int soc3;
-	int soc4;
-	int soc5;
+	int so[5];
 }soc[100];
 
 
@@ -294,12 +291,12 @@ int newsocks(){
 		return 0;
 	}
 	else if(nowselect==1)
-			socksadd1();
+			socksadd1c();
 		else
 			socksadd2();
 	return 0;
 }
-int socksadd1(){
+int socksadd1c(){
 
 	//------------------------------------------------------------------------------------------------------
 	int nowselect=1,q=1;
@@ -312,71 +309,71 @@ int socksadd1(){
 			printf("请选择即将录入的成绩");
 			if(q==1){
 				printf("\n\n\n\t\t<---    1.");
-				if(socname1[0]!='\0')
-					printf("%s",socname1);
+				if(socname[1][0]!='\0')
+					printf("%s",socname[1]);
 				else
 					printf("[空]");
 				printf("\t\t--->\n\n\n");}
 			else{
 				printf("\n\n\n\t\t\t1.");
-			if(socname1[0]!='\0')
-				printf("%s",socname1);
+			if(socname[1][0]!='\0')
+				printf("%s",socname[1]);
 			else
 				printf("[空]");
 			printf("\n\n\n");}
 			if(q==2){
 				printf("\t\t<---    2.");
-			if(socname2[0]!='\0')
-				printf("%s",socname1);
+			if(socname[2][0]!='\0')
+				printf("%s",socname[2]);
 			else
 				printf("[空]");
 			printf("\t\t--->\n\n\n");}
 			else {
 				printf("\t\t\t2.");
-			if(socname2[0]!='\0')
-				printf("%s",socname1);
+			if(socname[2][0]!='\0')
+				printf("%s",socname[2]);
 			else
 				printf("[空]");
 			printf("\n\n\n");}
 			if(q==3){
 				printf("\t\t<---    3.");
-			if(socname3[0]!='\0')
-				printf("%s",socname1);
+			if(socname[3][0]!='\0')
+				printf("%s",socname[3]);
 			else
 				printf("[空]");
 			printf("\t\t--->\n\n\n");}
 			else {
 				printf("\t\t\t3.");
-			if(socname3[0]!='\0')
-				printf("%s",socname1);
+			if(socname[3][0]!='\0')
+				printf("%s",socname[3]);
 			else
 				printf("[空]");
 			printf("\n\n\n");}
 			if(q==4){
 				printf("\t\t<---    4.");
-			if(socname4[0]!='\0')
-				printf("%s",socname1);
+			if(socname[4][0]!='\0')
+				printf("%s",socname[4]);
 			else
 				printf("[空]");
 			printf("\t\t--->\n\n\n");}
 			else{
 				printf("\t\t\t4.");
-			if(socname4[0]!='\0')
-				printf("%s",socname1);
+			if(socname[4][0]!='\0')
+				printf("%s",socname[4]);
 			else
 				printf("[空]");
 			printf("\n\n\n");}
 			if(q==5){
 				printf("\t\t<---    5.");
-			if(socname5[0]!='\0')
-				printf("%s",socname1);
+			if(socname[5][0]!='\0')
+				printf("%s",socname[5]);
 			else
 				printf("[空]");
 			printf("\t\t--->\n\n\n");}
 			else{
 				printf("\t\t\t5.");
-			if(socname5[0]!='\0')
-				printf("%s",socname1);
+			if(socname[5][0]!='\0')
+				printf("%s",socname[5]);
 			else
 				printf("[空]");
 			printf("\n\n\n");}
@@ -414,27 +411,22 @@ int socksadd1(){
 		}
 		//选择结束
 		if(nowselect==0){
-			exit(0);
+			return 0;
 		}
 		if(nowselect==1){
-			newstudent();
+			socksadd1(1);
 		}
 		if(nowselect==2){
-			newsocks();
+			socksadd1(2);
 		}
 		if(nowselect==3){
-			getsocks();
+			socksadd1(3);
 		}
 		if(nowselect==4){
-			getout();
+			socksadd1(4);
 		}
 		if(nowselect==5){
-			if(stunull==-1){
-				clear();
-				printf("你还没有建立学生信息档案,按任意键返回");
-				getch();
-			}
-			else checkchange();
+			socksadd1(5);
 		}
 	}
 
@@ -443,6 +435,39 @@ int socksadd1(){
 	//------------------------------------------------------------------------------------------------------
 	system("color f9");
 	return 0;
+}
+int socksadd1(int st){
+	int nowinput=0;
+	clear();
+	if(socname[st][0]=='\0'){
+	printf("\n您还没有为该成绩确定名称，请输入名称：");
+	scanf("%s",socname[st]);
+	}
+	//===========================================================================================
+
+		clear();
+		printf("\t\t请直接输入对应学生的成绩\n");
+		printf("\t----------------+---------------+---------------|\n");
+		printf("\t|\t学号\t+\t姓名\t|\t");
+		printf("%s",socname[st]);
+		printf("\t|\n");
+		printf("\t|---------------+---------------+---------------|\n");
+		for(j=0;j<=lastaddst;j++){
+			if(j!=nowinput)
+				printf("\t|\t%s\t+\t%s\t|\t%d\t|\n",stu[j].id,stu[j].name,soc[j].so[st]);
+			else{
+				printf("\t|\t%s\t+\t%s\t|\t",stu[j].id,stu[j].name);
+				fflush(stdin);
+				scanf("%d",soc[j].so[st]);
+		}
+		}
+		printf("\t----------------+---------------+----------------\n");
+		printf("\n\t全部录入完成,按任意键返回");
+		fflush(stdin);
+		getch();
+		return 0;
+	//===========================================================================================
+
 }
 int socksadd2(){
 	return 0;
