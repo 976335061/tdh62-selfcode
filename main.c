@@ -44,7 +44,7 @@ int socksadd1();
 int socksadd2();
 //变量声明
 static char emptyc=' ',socname1[100]={0},socname2[100]={0},socname3[100]={0},socname4[100]={0},socname5[100]={0};
-static int i,j,k,lastaddst=-1;
+static int i,j,k,lastaddst=0,stunull=1;
 static int choosetype,choose;//对于是否选择，选择1：是，选择2：否，
 #define studentidlen 100
 #define studentnamelen 80
@@ -206,7 +206,7 @@ void mainpage(){
 			getout();
 		}
 		if(nowselect==5){
-			if(lastaddst==-1){
+			if(stunull==1){
 				clear();
 				printf("你还没有建立学生信息档案,按任意键返回");
 				getch();
@@ -237,6 +237,7 @@ int newstudent(){
 		fflush(stdin);
 		lastaddst=i;
 		printf("\n\t录入成功，按任意键继续或按N返回主页面");
+		stunull=0;
 		if(getchoose(3)==0){
 			break;
 		}
@@ -286,7 +287,7 @@ int newsocks(){
 				nowselect=keyCode-48;
 		}
 	}
-	if(lastaddst==-1){
+	if(stunull==1){
 		clear();
 		printf("你还没有建立学生信息档案,按任意键返回");
 		getch();
@@ -325,56 +326,56 @@ int socksadd1(){
 			printf("\n\n\n");}
 			if(q==2){
 				printf("\t\t<---    2.");
-			if(socname1[0]!='\0')
+			if(socname2[0]!='\0')
 				printf("%s",socname1);
 			else
 				printf("[空]");
 			printf("\t\t--->\n\n\n");}
 			else {
 				printf("\t\t\t2.");
-			if(socname1[0]!='\0')
+			if(socname2[0]!='\0')
 				printf("%s",socname1);
 			else
 				printf("[空]");
 			printf("\n\n\n");}
 			if(q==3){
 				printf("\t\t<---    3.");
-			if(socname1[0]!='\0')
+			if(socname3[0]!='\0')
 				printf("%s",socname1);
 			else
 				printf("[空]");
 			printf("\t\t--->\n\n\n");}
 			else {
 				printf("\t\t\t3.");
-			if(socname1[0]!='\0')
+			if(socname3[0]!='\0')
 				printf("%s",socname1);
 			else
 				printf("[空]");
 			printf("\n\n\n");}
 			if(q==4){
 				printf("\t\t<---    4.");
-			if(socname1[0]!='\0')
+			if(socname4[0]!='\0')
 				printf("%s",socname1);
 			else
 				printf("[空]");
 			printf("\t\t--->\n\n\n");}
 			else{
 				printf("\t\t\t4.");
-			if(socname1[0]!='\0')
+			if(socname4[0]!='\0')
 				printf("%s",socname1);
 			else
 				printf("[空]");
 			printf("\n\n\n");}
 			if(q==5){
 				printf("\t\t<---    5.");
-			if(socname1[0]!='\0')
+			if(socname5[0]!='\0')
 				printf("%s",socname1);
 			else
 				printf("[空]");
 			printf("\t\t--->\n\n\n");}
 			else{
 				printf("\t\t\t5.");
-			if(socname1[0]!='\0')
+			if(socname5[0]!='\0')
 				printf("%s",socname1);
 			else
 				printf("[空]");
@@ -428,7 +429,7 @@ int socksadd1(){
 			getout();
 		}
 		if(nowselect==5){
-			if(lastaddst==-1){
+			if(stunull==-1){
 				clear();
 				printf("你还没有建立学生信息档案,按任意键返回");
 				getch();
