@@ -40,8 +40,10 @@ int getsocks();
 int getout();
 int checkchange();
 int changest(int a);
+int socksadd1();
+int socksadd2();
 //变量声明
-static char emptyc=' ';
+static char emptyc=' ',socname1[100]={0},socname2[100]={0},socname3[100]={0},socname4[100]={0},socname5[100]={0};
 static int i,j,k,lastaddst=-1;
 static int choosetype,choose;//对于是否选择，选择1：是，选择2：否，
 #define studentidlen 100
@@ -256,7 +258,7 @@ int newsocks(){
 	char keyCode;
 	for(;;){
 		clear();
-		printf("\n\n\t批量录入请根据提示输入对应学生的成绩\n最多允许记录5个不同的成绩\n");
+
 		if(nowselect==1)
 			printf("\n\n\n\t\t<---    1.单门学科成绩录入\t\t--->\n\n\n");
 		else
@@ -265,6 +267,8 @@ int newsocks(){
 			printf("\t\t<---    2.同时录入多个成绩\t\t--->\n\n\n");
 		else 
 			printf("\t\t\t2.同时录入多个成绩\n\n\n");
+		printf("\t批量录入请根据提示输入对应学生的成绩\n\t最多允许记录5个不同的成绩\n");
+		printf("\t模式说明：如果希望录入同一个学生的多个成绩请选择2\n\t如果希望录入单门学科全班成绩请选择1\n\n");
 		printf("通过Tab和方向键可以轮换选择或直接输入数字，按下Enter来确认选择");
 		fflush(stdin);
 		keyCode=getch();
@@ -282,10 +286,166 @@ int newsocks(){
 				nowselect=keyCode-48;
 		}
 	}
+	if(lastaddst==-1){
+		clear();
+		printf("你还没有建立学生信息档案,按任意键返回");
+		getch();
+		return 0;
+	}
+	else if(nowselect==1)
+			socksadd1();
+		else
+			socksadd2();
 	return 0;
 }
+int socksadd1(){
+
+	//------------------------------------------------------------------------------------------------------
+	int nowselect=1,q=1;
+	char keyCode;
+	system("color f0");
+	for(;;){
+		for(;;){
+			clear();
+			q=nowselect;
+			printf("请选择即将录入的成绩");
+			if(q==1){
+				printf("\n\n\n\t\t<---    1.");
+				if(socname1[0]!='\0')
+					printf("%s",socname1);
+				else
+					printf("[空]");
+				printf("\t\t--->\n\n\n");}
+			else{
+				printf("\n\n\n\t\t\t1.");
+			if(socname1[0]!='\0')
+				printf("%s",socname1);
+			else
+				printf("[空]");
+			printf("\n\n\n");}
+			if(q==2){
+				printf("\t\t<---    2.");
+			if(socname1[0]!='\0')
+				printf("%s",socname1);
+			else
+				printf("[空]");
+			printf("\t\t--->\n\n\n");}
+			else {
+				printf("\t\t\t2.");
+			if(socname1[0]!='\0')
+				printf("%s",socname1);
+			else
+				printf("[空]");
+			printf("\n\n\n");}
+			if(q==3){
+				printf("\t\t<---    3.");
+			if(socname1[0]!='\0')
+				printf("%s",socname1);
+			else
+				printf("[空]");
+			printf("\t\t--->\n\n\n");}
+			else {
+				printf("\t\t\t3.");
+			if(socname1[0]!='\0')
+				printf("%s",socname1);
+			else
+				printf("[空]");
+			printf("\n\n\n");}
+			if(q==4){
+				printf("\t\t<---    4.");
+			if(socname1[0]!='\0')
+				printf("%s",socname1);
+			else
+				printf("[空]");
+			printf("\t\t--->\n\n\n");}
+			else{
+				printf("\t\t\t4.");
+			if(socname1[0]!='\0')
+				printf("%s",socname1);
+			else
+				printf("[空]");
+			printf("\n\n\n");}
+			if(q==5){
+				printf("\t\t<---    5.");
+			if(socname1[0]!='\0')
+				printf("%s",socname1);
+			else
+				printf("[空]");
+			printf("\t\t--->\n\n\n");}
+			else{
+				printf("\t\t\t5.");
+			if(socname1[0]!='\0')
+				printf("%s",socname1);
+			else
+				printf("[空]");
+			printf("\n\n\n");}
+			if(q==0)
+				printf("\t\t<---    0.退出录入\t--->\n\n\n");
+			else
+				printf("\t\t\t0.退出录入\n\n\n");
+			printf("通过Tab和方向键可以轮换选择或直接输入数字，按下Enter来确认选择");
+			fflush(stdin);
+			keyCode=getch();
+			if(keyCode==9){
+				if(nowselect==5)
+					nowselect=0;
+				else
+					nowselect=nowselect+1;
+			}
+			else if(keyCode==13){
+				break;
+			}
+			else if(keyCode==-32){
+				keyCode=getch();
+				if(keyCode==72)
+					if(nowselect==0)
+						nowselect=5;
+					else 
+						nowselect=nowselect-1;
+					if(keyCode==80)
+						if(nowselect==5)
+							nowselect=0;
+						else nowselect=nowselect+1;
+			}
+			else if(keyCode-48<=5 &&keyCode-48>=0){
+				nowselect=keyCode-48;
+			}
+		}
+		//选择结束
+		if(nowselect==0){
+			exit(0);
+		}
+		if(nowselect==1){
+			newstudent();
+		}
+		if(nowselect==2){
+			newsocks();
+		}
+		if(nowselect==3){
+			getsocks();
+		}
+		if(nowselect==4){
+			getout();
+		}
+		if(nowselect==5){
+			if(lastaddst==-1){
+				clear();
+				printf("你还没有建立学生信息档案,按任意键返回");
+				getch();
+			}
+			else checkchange();
+		}
+	}
 
 
+
+	//------------------------------------------------------------------------------------------------------
+	system("color f9");
+	return 0;
+}
+int socksadd2(){
+	return 0;
+}
 
 
 int getsocks(){
@@ -294,6 +454,8 @@ int getsocks(){
 int getout(){
 	return 0;
 }
+
+
 int checkchange(){
 	int exit=0,change=0;
 	int nowselect=0;
