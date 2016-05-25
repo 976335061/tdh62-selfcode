@@ -42,7 +42,7 @@ int checkchange();
 int changest(int a);
 //变量声明
 static char emptyc=' ';
-static int i,j,k,lastaddst=0;
+static int i,j,k,lastaddst=-1;
 static int choosetype,choose;//对于是否选择，选择1：是，选择2：否，
 #define studentidlen 100
 #define studentnamelen 80
@@ -55,6 +55,8 @@ struct socks{
 	int soc1;
 	int soc2;
 	int soc3;
+	int soc4;
+	int soc5;
 }soc[100];
 
 
@@ -65,7 +67,7 @@ void main (){
 	clear();
 	st = welcome(1);
 	mainpage();
-
+	
 }
 //欢迎屏幕
 int welcome(int wtype){
@@ -78,7 +80,7 @@ int welcome(int wtype){
 			Sleep(15);//Sleep3秒，确保之前内容没有快速被覆盖，之后清空屏幕
 			for(j=0;j<i;j++){
 				printf("#");
-				}
+			}
 			for(k=38-i;k>=0;k--){
 				printf("-");
 			}
@@ -91,7 +93,7 @@ int welcome(int wtype){
 	outputline();
 	state=checkstate();
     system("color f9");//设定输出窗口颜色
-
+	
 	if(state==1){
 		printf("你还没有录入任何学生信息，录入学生信息请输入Y或者直接按回车，坚持不录入学生信息请输入N\n注意：如果没有录入学生信息，之后部分功能将异常或无法使用。\n");
 		choose=getchoose(2);//chooseose类型1：数字，类型2：是否
@@ -102,7 +104,7 @@ int welcome(int wtype){
 			return 888;
 		}
 		else {
-		return 999;
+			return 999;
 		}
 	}
 	if(state==2){
@@ -115,11 +117,11 @@ int welcome(int wtype){
 			return 888;
 		}
 		else {
-		return 999;
+			return 999;
 		}
 	}
 	if(wtype!=1){
-	return 1000;
+		return 1000;
 	}
 	return 0;
 }
@@ -130,42 +132,42 @@ void mainpage(){
 	char keyCode;
 	int nowselect=1,q=1;
 	for(;;){
-			for(;;){
-		clear();
-		q=nowselect;
-		if(q==1)
-			printf("\n\n\n\t\t<---    1.录入学生信息\t\t--->\n\n\n");
-		else
-			printf("\n\n\n\t\t\t1.录入学生信息\n\n\n");
-		if(q==2)
-			printf("\t\t<---    2.批量录入成绩\t\t--->\n\n\n");
-		else 
-			printf("\t\t\t2.批量录入成绩\n\n\n");
-		if(q==3)
-			printf("\t\t<---    3.查看成绩\t\t--->\n\n\n");
-		else 
-			printf("\t\t\t3.查看成绩\n\n\n");
-		if(q==4)
-			printf("\t\t<---    4.查看统计报表\t\t--->\n\n\n");
-		else
-			printf("\t\t\t4.查看统计报表\n\n\n");
-		if(q==5)
-			printf("\t\t<---    5.数据查询更改\t\t--->\n\n\n");
-		else
-			printf("\t\t\t5.数据查询更改\n\n\n");
-		if(q==0)
-			printf("\t\t<---    0.退出程序\t--->\n\n\n");
-		else
-			printf("\t\t\t0.退出程序\n\n\n");
-		printf("通过Tab和方向键可以轮换选择或直接输入数字，按下Enter来确认选择");
-		fflush(stdin);
+		for(;;){
+			clear();
+			q=nowselect;
+			if(q==1)
+				printf("\n\n\n\t\t<---    1.录入学生信息\t\t--->\n\n\n");
+			else
+				printf("\n\n\n\t\t\t1.录入学生信息\n\n\n");
+			if(q==2)
+				printf("\t\t<---    2.批量录入成绩\t\t--->\n\n\n");
+			else 
+				printf("\t\t\t2.批量录入成绩\n\n\n");
+			if(q==3)
+				printf("\t\t<---    3.查看成绩\t\t--->\n\n\n");
+			else 
+				printf("\t\t\t3.查看成绩\n\n\n");
+			if(q==4)
+				printf("\t\t<---    4.查看统计报表\t\t--->\n\n\n");
+			else
+				printf("\t\t\t4.查看统计报表\n\n\n");
+			if(q==5)
+				printf("\t\t<---    5.数据查询更改\t\t--->\n\n\n");
+			else
+				printf("\t\t\t5.数据查询更改\n\n\n");
+			if(q==0)
+				printf("\t\t<---    0.退出程序\t--->\n\n\n");
+			else
+				printf("\t\t\t0.退出程序\n\n\n");
+			printf("通过Tab和方向键可以轮换选择或直接输入数字，按下Enter来确认选择");
+			fflush(stdin);
 			keyCode=getch();
 			if(keyCode==9){
 				if(nowselect==5)
 					nowselect=0;
 				else
 					nowselect=nowselect+1;
-				}
+			}
 			else if(keyCode==13){
 				break;
 			}
@@ -176,10 +178,10 @@ void mainpage(){
 						nowselect=5;
 					else 
 						nowselect=nowselect-1;
-				if(keyCode==80)
-					if(nowselect==5)
-						nowselect=0;
-					else nowselect=nowselect+1;
+					if(keyCode==80)
+						if(nowselect==5)
+							nowselect=0;
+						else nowselect=nowselect+1;
 			}
 			else if(keyCode-48<=5 &&keyCode-48>=0){
 				nowselect=keyCode-48;
@@ -202,7 +204,7 @@ void mainpage(){
 			getout();
 		}
 		if(nowselect==5){
-			if(lastaddst==0){
+			if(lastaddst==-1){
 				clear();
 				printf("你还没有建立学生信息档案,按任意键返回");
 				getch();
@@ -217,7 +219,7 @@ int newstudent(){
 	clear();
 	
 	printf("\n\n\t本程序最多允许录入100名学生信息。按任意键继续或N返回主页面");
-
+	
 	if(getchoose(3)!=1){
 		return 0;
 	}
@@ -246,12 +248,46 @@ int newstudent(){
 		}
 		printf("\t\t----------------+----------------\n");
 	}
-		return 0;
-
+	return 0;
+	
 }
 int newsocks(){
+	int nowselect=1;
+	char keyCode;
+	for(;;){
+		clear();
+		printf("\n\n\t批量录入请根据提示输入对应学生的成绩\n最多允许记录5个不同的成绩\n");
+		if(nowselect==1)
+			printf("\n\n\n\t\t<---    1.单门学科成绩录入\t\t--->\n\n\n");
+		else
+			printf("\n\n\n\t\t\t1.单门学科成绩录入\n\n\n");
+		if(nowselect==2)
+			printf("\t\t<---    2.同时录入多个成绩\t\t--->\n\n\n");
+		else 
+			printf("\t\t\t2.同时录入多个成绩\n\n\n");
+		printf("通过Tab和方向键可以轮换选择或直接输入数字，按下Enter来确认选择");
+		fflush(stdin);
+		keyCode=getch();
+		if(keyCode==9 || keyCode==-32){
+			if(nowselect==1)
+				nowselect=2;
+			else
+				nowselect=1;
+		}
+		else if(keyCode==13){
+			break;
+		}
+		else{
+			if(keyCode-48==1 || keyCode-48==2)
+				nowselect=keyCode-48;
+		}
+	}
 	return 0;
 }
+
+
+
+
 int getsocks(){
 	return 0;
 }
@@ -275,19 +311,19 @@ int checkchange(){
 		}
 		printf("\t\t----------------+----------------\n");
 		printf("\t\t按ESC返回主页面\n");
-	fflush(stdin);
-	keyCode=getch();
-	if(keyCode==27){
-		exit=1;
-	}
-	if(keyCode==9){
-		if(nowselect==lastaddst)
-			nowselect=0;
-		else
-			nowselect=nowselect+1;
+		fflush(stdin);
+		keyCode=getch();
+		if(keyCode==27){
+			exit=1;
+		}
+		if(keyCode==9){
+			if(nowselect==lastaddst)
+				nowselect=0;
+			else
+				nowselect=nowselect+1;
 		}
 		else if(keyCode==13){
-		change=1;
+			change=1;
 		}
 		else if(keyCode==-32){
 			keyCode=getch();
@@ -301,62 +337,62 @@ int checkchange(){
 						nowselect=0;
 					else nowselect=nowselect+1;
 		}
-	if(exit==1)
-		return 0;
-	if(change==1)
-		changest(nowselect);
+		if(exit==1)
+			return 0;
+		if(change==1)
+			changest(nowselect);
 		change=0;
-	
+		
 	}
-
+	
 }
 //信息修改
 int changest(int a){
 	int nowselect=0;
 	char keyCode;
-		for(;;){
-			clear();
-			printf("\n\n\t\t\t将修改学生信息：\n\n");
-			printf("\t\t|\t%s\t+\t%s\t|\n",stu[a].id,stu[a].name);
-			printf("请选择需要更改的内容，按回车确认，选择取消放弃更改\n");
-			if(nowselect==0)
-				printf("    ===> 取消更改  <===\n");
-			else
-				printf("\t 取消更改\n");
-			if(nowselect==1)
-				printf("    ===>学号：%s   <===\n",stu[a].id);
-			else
-				printf("\t学号：%s\n",stu[a].id);
-			if(nowselect==2)
-				printf("    ===>姓名：%s   <===\n",stu[a].name);
-			else
-				printf("\t姓名：%s\n",stu[a].name);
+	for(;;){
+		clear();
+		printf("\n\n\t\t\t将修改学生信息：\n\n");
+		printf("\t\t|\t%s\t+\t%s\t|\n",stu[a].id,stu[a].name);
+		printf("请选择需要更改的内容，按回车确认，选择取消放弃更改\n");
+		if(nowselect==0)
+			printf("    ===> 取消更改  <===\n");
+		else
+			printf("\t 取消更改\n");
+		if(nowselect==1)
+			printf("    ===>学号：%s   <===\n",stu[a].id);
+		else
+			printf("\t学号：%s\n",stu[a].id);
+		if(nowselect==2)
+			printf("    ===>姓名：%s   <===\n",stu[a].name);
+		else
+			printf("\t姓名：%s\n",stu[a].name);
+		fflush(stdin);
+		keyCode=getch();
+		if(keyCode==13){
+			printf("\n请输入更改后的信息");
 			fflush(stdin);
-			keyCode=getch();
-			if(keyCode==13){
-				printf("\n请输入更改后的信息");
-				fflush(stdin);
-				if(nowselect==0)
-					return 0;
-				if(nowselect==1)
-					scanf("%s",stu[a].id);
-				if(nowselect==2)
-					scanf("%s",stu[a].name);
-				break;
-			}
-			else if(keyCode==-32){
-				keyCode=getch();
-				if(keyCode==72)
-					if(nowselect==0)
-						nowselect=2;
-					else 
-						nowselect=nowselect-1;
-					if(keyCode==80)
-						if(nowselect==2)
-							nowselect=0;
-						else nowselect=nowselect+1;
-			}
+			if(nowselect==0)
+				return 0;
+			if(nowselect==1)
+				scanf("%s",stu[a].id);
+			if(nowselect==2)
+				scanf("%s",stu[a].name);
+			break;
 		}
+		else if(keyCode==-32){
+			keyCode=getch();
+			if(keyCode==72)
+				if(nowselect==0)
+					nowselect=2;
+				else 
+					nowselect=nowselect-1;
+				if(keyCode==80)
+					if(nowselect==2)
+						nowselect=0;
+					else nowselect=nowselect+1;
+		}
+	}
 	clear();
 	printf("修改成功,按任意键返回");
 	fflush(stdin);
