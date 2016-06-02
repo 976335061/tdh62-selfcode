@@ -43,19 +43,26 @@ int changest(int a);
 int socksadd1(int a);
 int socksadd1c();
 int socksadd2();
+int tofile();
+int fromfile();
+int savesetting();
+int readsetting();
 //变量声明
 static char emptyc=' ',socname[6][100]={0};
-static int i,j,k,lastaddst=0,stunull=1;
+static int i,j,k,lastaddst,stunull=1;
 static int choosetype,choose;//对于是否选择，选择1：是，选择2：否，
 #define studentidlen 100
 #define studentnamelen 80
+#define fileopen fp=fopen("a.txt","ab+")
+#define newfileopen fp=fopen("a.txt","wb+")
 //student infomation
 struct student {
 	char id[studentidlen];
 	char name[studentnamelen];
     int so[5];
 }stu[100];
-
+FILE * fp;
+FILE * in;
 
 
 //End
@@ -65,7 +72,7 @@ void main (){
 	clear();
 	st = welcome(1);
 	mainpage();
-	
+
 }
 //欢迎屏幕
 int welcome(int wtype){
@@ -74,16 +81,43 @@ int welcome(int wtype){
 		SetConsoleTitle("学生成绩管理系统----by谭道桓");//通过Windows.h里的SetConsoleTitle设置标题
 		clear();//清空屏幕
 		printf("\n\n\n\n%28c欢迎使用学生成绩管理系统\n%33c设计：谭道桓\n%31c学号:201511106312\n\n%15c正在加载中",emptyc,emptyc,emptyc,emptyc);
-		for(i=0;i<40;i++){
-			Sleep(15);//Sleep3秒，确保之前内容没有快速被覆盖，之后清空屏幕
+		for(i=0;i<10;i++){
+			Sleep(30);
 			for(j=0;j<i;j++){
 				printf("#");
 			}
+			
 			for(k=38-i;k>=0;k--){
 				printf("-");
 			}
-			printf(">\r%15c正在加载中<",emptyc);
-		}//造成真的在加载的错觉,日后增加文件操作可在这完成
+			printf(">\r%15c读取设置<",emptyc);
+		}
+
+		readsetting();//读取设置
+		for(i=10;i<30;i++){
+			Sleep(30);
+			for(j=0;j<i;j++){
+				printf("#");
+			}
+			
+			for(k=38-i;k>=0;k--){
+				printf("-");
+			}
+			printf(">\r%15c读取信息<",emptyc);
+		}
+		Sleep(100);
+		fromfile();//读取数据
+		for(i=30;i<40;i++){
+			Sleep(15);
+			for(j=0;j<i;j++){
+				printf("#");
+			}
+			
+			for(k=38-i;k>=0;k--){
+				printf("-");
+			}
+			printf(">\r%15c调整效果<",emptyc);
+		}
 		printf("\n%34c加载完成！\n",emptyc);
 		
 		//初始化成绩
@@ -196,6 +230,8 @@ void mainpage(){
 		}
 		//选择结束
 		if(nowselect==0){
+			tofile();
+			savesetting();
 			exit(0);
 		}
 		if(nowselect==1){
@@ -711,4 +747,57 @@ void outputline(){
 }
 int checkstate(){
 	return 55;
+}
+
+int tofile(){
+	if((newfileopen)==NULL){
+		clear();
+		printf("文件读取失败！按任意键继续");
+		fflush(stdin);
+		getch();
+		return 0;
+	}
+	for(i=0;i<=lastaddst;i++){
+		fwrite(&stu[i], sizeof(stu[i]),1,fp);
+	}
+	rewind(fp);
+	return 0;
+
+
+}
+int fromfile(){
+	if((newfileopen)==NULL){
+		clear();
+		printf("文件读取失败！按任意键继续");
+		fflush(stdin);
+		getch();
+		return 0;
+	}
+	for(i=0;i<=100;i++){
+		fread(&stu[i], sizeof(stu[i]),1,fp);
+	}
+	rewind(fp);
+	return 0;
+
+}
+int savesetting(){
+	in=fopen("setting.txt","ab+");
+	rewind(in);
+	for(i=0;i<=5;i++){
+	fwrite(&socname[i],sizeof(socname[i]),1,in);
+	}
+	fprintf(in,"%d",lastaddst);
+	rewind(in);
+	return 0;
+}
+int readsetting(){
+	in=fopen("setting.txt","ab+");
+	rewind(in);
+	for(i=0;i<=5;i++){
+	fread(&socname[i],sizeof(socname[i]),1,in);
+	}
+	fscanf(in,"%d",&lastaddst);
+	stunull=0;
+	rewind(in);
+	return 0;
 }
