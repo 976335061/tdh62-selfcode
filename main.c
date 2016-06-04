@@ -705,7 +705,7 @@ int socksadd2(){
 }
 
 int socksadd2c(){
-	int line=2,q1,q2;
+	int line=2,q1,q2,q3;
 	for(i=1;i<=5;i++){
 		if(s[i]==1)
 			line++;
@@ -737,16 +737,23 @@ int socksadd2c(){
 			q2=0;
 		else
 			q2=-1;
+		if(q2+6>=lastaddst)
+			q3=lastaddst;
+		else
+			q3=q2+6;
 	}
 	else{
 		q1=lastaddsoc2-5;
 		q2=lastaddsoc2;
+		if(q2+6>=lastaddst)
+			q3=lastaddst;
+		else
+			q3=q2+6;
+	}
 		
 		for(;;){
-			if(lastaddsoc2==lastaddst)
-				break;
-				printf("\t\
-					clear();t成绩录入\n\n");
+				printf("\t\t成绩录入\n\n");
+					clear();
 				for(i=1;i<=line;i++)
 					printf("+---------------");
 				printf("\n");
@@ -760,9 +767,9 @@ int socksadd2c(){
 				for(i=1;i<=line;i++)
 					printf("+---------------");
 				printf("\n");
-				
+				printf("%d%d%d",q1,q2,q3);
 				for(j=q1;j<=q2;j++){
-					printf("\t|\t%s\t+\t%s\t",stu[j].id,stu[j].name);
+					printf("|\t%s\t+\t%s\t",stu[j].id,stu[j].name);
 					for(i=1;i<=5;i++){
 						if(s[i]==1){
 							printf("+\t%s\t",stu[j].so[i]);
@@ -774,27 +781,23 @@ int socksadd2c(){
 					scanf("%d",&gsoc);
 					stu[j].so[st] = gsoc;
 					*/
-					
-					printf("\t\t等待录入\n");
-					printf("\t\t----------------+----------------\n");
-					printf("\t\t|\t学号\t+\t姓名\t|\n");
-					printf("\t\t|---------------+---------------|\n");
-					for(j=q2+1;j<=lastaddst;j++){
-						if(j!=nowselect)
+					if(lastaddsoc2!=lastaddst-1){
+						printf("\t\t等待录入\n");
+						printf("\t\t----------------+----------------\n");
+						printf("\t\t|\t学号\t+\t姓名\t|\n");
+						printf("\t\t|---------------+---------------|\n");
+						for(j=q2+1;j<=q3;j++){
 							printf("\t\t|\t%s\t+\t%s\t|\n",stu[j].id,stu[j].name);
-						else
-							printf("\t   ====>\t%s\t+\t%s\t<====\n",stu[j].id,stu[j].name);
+						}
+						printf("\t\t----------------+----------------\n");
 					}
-					printf("\t\t----------------+----------------\n");
 					/***********************************************************************************************************************************************/
 					
 					
 					
 					
 				}
-		}
 		
-		getch();
 	}
 	fflush(stdin);
 	printf("录入完成，按任意键返回");
