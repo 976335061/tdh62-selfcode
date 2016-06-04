@@ -689,7 +689,7 @@ int socksadd2(){
 							nowselect=0;
 						else nowselect=nowselect+1;
 			}
-			else if(keyCode-48<=5 &&keyCode-48>=0){
+			else if(keyCode-48<=6 &&keyCode-48>=0){
 				nowselect=keyCode-48;
 			}
 		}
@@ -750,53 +750,58 @@ int socksadd2c(){
 		else
 			q3=q2+6;
 	}
-		
-		for(;;){
-				printf("\t\t成绩录入\n\n");
-					clear();
-				for(i=1;i<=line;i++)
-					printf("+---------------");
-				printf("\n");
-				printf("|\t学号\t+\t姓名\t");
-				for(i=1;i<=5;i++){
-					if(s[i]==1){
-						printf("+\t%s\t",socname[i]);
-					}
+	
+	for(;;){
+		printf("\t\t成绩录入\n\n");
+		clear();
+		if(lastaddst==lastaddsoc2)
+			break;
+		for(i=1;i<=line;i++)
+			printf("+---------------");
+		printf("\n");
+		printf("|\t学号\t+\t姓名\t");
+		for(i=1;i<=5;i++){
+			if(s[i]==1){
+				printf("+\t%s\t",socname[i]);
+			}
+		}
+		printf("|\n");
+				if(q1>=0){
+
+		for(i=1;i<=line;i++)
+			printf("+---------------");
+		printf("\n");
+		printf("%d%d%d",q1,q2,q3);
+		for(j=q1;j<=q2;j++){
+			printf("|\t%s\t+\t%s\t",stu[j].id,stu[j].name);
+			for(i=1;i<=5;i++){
+				if(s[i]==1){
+					printf("+\t%s\t",stu[j].so[i]);
 				}
-				printf("|\n");
-				for(i=1;i<=line;i++)
-					printf("+---------------");
-				printf("\n");
-				printf("%d%d%d",q1,q2,q3);
-				for(j=q1;j<=q2;j++){
-					printf("|\t%s\t+\t%s\t",stu[j].id,stu[j].name);
-					for(i=1;i<=5;i++){
-						if(s[i]==1){
-							printf("+\t%s\t",stu[j].so[i]);
-						}
-					}
-					printf("|\n");
-					/*复制来,可能有用
-					fflush(stdin);
-					scanf("%d",&gsoc);
-					stu[j].so[st] = gsoc;
-					*/
-					if(lastaddsoc2!=lastaddst-1){
-						printf("\t\t等待录入\n");
-						printf("\t\t----------------+----------------\n");
-						printf("\t\t|\t学号\t+\t姓名\t|\n");
-						printf("\t\t|---------------+---------------|\n");
-						for(j=q2+1;j<=q3;j++){
-							printf("\t\t|\t%s\t+\t%s\t|\n",stu[j].id,stu[j].name);
-						}
-						printf("\t\t----------------+----------------\n");
-					}
-					/***********************************************************************************************************************************************/
-					
-					
-					
-					
+			}
+			printf("|\n");
+		}
+			/*复制来,可能有用
+			fflush(stdin);
+			scanf("%d",&gsoc);
+			stu[j].so[st] = gsoc;
+			*/
+			if(lastaddsoc2!=lastaddst-1){
+				printf("\t\t等待录入\n");
+				printf("\t\t----------------+----------------\n");
+				printf("\t\t|\t学号\t+\t姓名\t|\n");
+				printf("\t\t|---------------+---------------|\n");
+				for(j=q2+1;j<=q3;j++){
+					printf("\t\t|\t%s\t+\t%s\t|\n",stu[j].id,stu[j].name);
 				}
+				printf("\t\t----------------+----------------\n");
+			}
+			/***********************************************************************************************************************************************/
+			
+			
+			
+			
+		}
 		
 	}
 	fflush(stdin);
