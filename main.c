@@ -50,7 +50,7 @@ int savesetting();
 int readsetting();
 //变量声明
 static char emptyc=' ',socname[6][100]={0};
-static int i,j,k,lastaddst,stunull=1;
+static int i,j,k,lastaddst,lastaddsoc2=-1,stunull=1;
 static int choosetype,choose;//对于是否选择，选择1：是，选择2：否，
 static int nowselect=1,q=1,s[6]={0,0,0,0,0,0};
 #define studentidlen 100
@@ -120,6 +120,12 @@ int welcome(int wtype){
 			}
 			printf(">\r%15c调整效果<",emptyc);
 		}
+		Sleep(300);
+		system("mode con cols=80 lines=35");
+		//调整窗口效果，宽度80，显示35行
+		printf("\n\n\n\n%28c欢迎使用学生成绩管理系统\n%33c设计：谭道桓\n%31c学号:201511106312\n",emptyc,emptyc,emptyc,emptyc);
+		
+		
 		printf("\n%34c加载完成！\n",emptyc);
 		
 		//初始化成绩
@@ -692,13 +698,110 @@ int socksadd2(){
 	}
 	socksadd2c();
 	
-	
+	return 0;
 	//------------------------------------------------------------------------------------------------------
 	
 	
 }
 
 int socksadd2c(){
+	int line=2,q1,q2;
+	for(i=1;i<=5;i++){
+		if(s[i]==1)
+			line++;
+	}
+	//调整视觉效果
+	switch(line)
+	{
+    case 3:
+		system("mode con cols=51 lines=30");
+		break;
+    case 4:
+		system("mode con cols=66 lines=30");
+		break;
+    case 5:
+		system("mode con cols=81 lines=30");
+		break;
+    case 6:
+		system("mode con cols=98 lines=30");
+		break;
+    case 7:
+		system("mode con cols=113 lines=30");
+		break;
+    default:
+		system("mode con cols=81 lines=30");
+	}
+	if(lastaddsoc2<=4){
+		q1=lastaddsoc2;
+		if(lastaddsoc2!=-1)
+			q2=0;
+		else
+			q2=-1;
+	}
+	else{
+		q1=lastaddsoc2-5;
+		q2=lastaddsoc2;
+		
+		for(;;){
+			if(lastaddsoc2==lastaddst)
+				break;
+				printf("\t\
+					clear();t成绩录入\n\n");
+				for(i=1;i<=line;i++)
+					printf("+---------------");
+				printf("\n");
+				printf("|\t学号\t+\t姓名\t");
+				for(i=1;i<=5;i++){
+					if(s[i]==1){
+						printf("+\t%s\t",socname[i]);
+					}
+				}
+				printf("|\n");
+				for(i=1;i<=line;i++)
+					printf("+---------------");
+				printf("\n");
+				
+				for(j=q1;j<=q2;j++){
+					printf("\t|\t%s\t+\t%s\t",stu[j].id,stu[j].name);
+					for(i=1;i<=5;i++){
+						if(s[i]==1){
+							printf("+\t%s\t",stu[j].so[i]);
+						}
+					}
+					printf("|\n");
+					/*复制来,可能有用
+					fflush(stdin);
+					scanf("%d",&gsoc);
+					stu[j].so[st] = gsoc;
+					*/
+					
+					printf("\t\t等待录入\n");
+					printf("\t\t----------------+----------------\n");
+					printf("\t\t|\t学号\t+\t姓名\t|\n");
+					printf("\t\t|---------------+---------------|\n");
+					for(j=q2+1;j<=lastaddst;j++){
+						if(j!=nowselect)
+							printf("\t\t|\t%s\t+\t%s\t|\n",stu[j].id,stu[j].name);
+						else
+							printf("\t   ====>\t%s\t+\t%s\t<====\n",stu[j].id,stu[j].name);
+					}
+					printf("\t\t----------------+----------------\n");
+					/***********************************************************************************************************************************************/
+					
+					
+					
+					
+				}
+		}
+		
+		getch();
+	}
+	fflush(stdin);
+	printf("录入完成，按任意键返回");
+	lastaddsoc2=-1;
+	system("mode con cols=80 lines=35");
+	getch();
+	fflush(stdin);
 	return 0;
 }
 
