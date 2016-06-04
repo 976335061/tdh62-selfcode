@@ -232,6 +232,10 @@ void mainpage(){
 		}
 		//选择结束
 		if(nowselect==0){
+			fclose(in);
+			fclose(fp);
+			system("del a.txt");
+			system("del setting.txt");
 			tofile();
 			savesetting();
 			exit(0);
@@ -528,11 +532,11 @@ int socksadd2(){
 		for(;;){
 			clear();
 			q=nowselect;
-			printf("请选择即将录入的成绩，按空格键或回车选择/取消选择");
+			printf("请选择即将录入的成绩，按空格键或回车选择/取消选择\n\n");
 
 			for(i=1;i<=5;i++){
 			if(q==i){
-				printf("\n\n\n\t\t<---    ");
+				printf("\t\t<---    ");
 				printf("%d.",i);
 				if(socname[i][0]!='\0'){
 					printf("%s",socname[i]);
@@ -543,7 +547,7 @@ int socksadd2(){
 					printf("[空]");
 				printf("\t\t--->\n\n\n");}
 			else{
-				printf("\n\n\n\t\t\t");
+				printf("\t\t\t");
 				printf("%d.",i);
 				if(socname[i][0]!='\0'){
 					printf("%s",socname[i]);
@@ -573,20 +577,26 @@ int socksadd2(){
 					nowselect=nowselect+1;
 			}
 			else if(keyCode==13||keyCode==32){
-		if(nowselect==0){
-			return 0;
-		}
-		for(i=1;i<=5;i++){
-		if(nowselect==i){
-			if(s[i]=1)
-				s[i]=0;
-			else
-				s[i]=1;
-		}
-		}
-		if(nowselect==6){
-			break;
-		}
+				if(nowselect==0){
+					return 0;
+				}
+				for(i=1;i<=5;i++){
+					if(nowselect==i){
+						if(socname[i][0]=='\0'){
+							clear();
+							printf("\n您还没有为该成绩确定名称，请输入名称：");
+							scanf("%s",socname[i]);
+							fflush(stdin);
+						}
+						if(s[i]=0)
+							s[i]=1;
+						else
+							s[i]=0;
+					}
+				}
+				if(nowselect==6){
+					break;
+				}
 			}
 			else if(keyCode==-32){
 				keyCode=getch();
