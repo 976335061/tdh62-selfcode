@@ -52,7 +52,7 @@ int readsetting();
 static char emptyc=' ',socname[6][100]={0};
 static int i,j,k,lastaddst,stunull=1;
 static int choosetype,choose;//对于是否选择，选择1：是，选择2：否，
-static int nowselect=1,q=1,s[6]={0};
+static int nowselect=1,q=1,s[6]={0,0,0,0,0,0};
 #define studentidlen 100
 #define studentnamelen 80
 #define fileopen fp=fopen("a.txt","ab+")
@@ -74,7 +74,7 @@ void main (){
 	clear();
 	st = welcome(1);
 	mainpage();
-
+	
 }
 //欢迎屏幕
 int welcome(int wtype){
@@ -94,7 +94,7 @@ int welcome(int wtype){
 			}
 			printf(">\r%15c读取设置<",emptyc);
 		}
-
+		
 		readsetting();//读取设置
 		for(i=10;i<30;i++){
 			Sleep(30);
@@ -522,62 +522,132 @@ int socksadd1(int st){
 	
 }
 int socksadd2(){
-
-
-	//------------------------------------------------------------------------------------------------------
-
 	char keyCode;
-	system("color f0");
+	int cango=0;
+	//------------------------------------------------------------------------------------------------------
+	
 	for(;;){
 		for(;;){
 			clear();
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE|FOREGROUND_INTENSITY|BACKGROUND_INTENSITY|BACKGROUND_BLUE|BACKGROUND_GREEN|BACKGROUND_RED);
 			q=nowselect;
 			printf("请选择即将录入的成绩，按空格键或回车选择/取消选择\n\n");
-
+			
 			for(i=1;i<=5;i++){
-			if(q==i){
-				printf("\t\t<---    ");
-				printf("%d.",i);
-				if(socname[i][0]!='\0'){
-					printf("%s",socname[i]);
-					if(s[i]==1)
-						printf("√已选择");
-				}	
-				else
-					printf("[空]");
-				printf("\t\t--->\n\n\n");}
-			else{
-				printf("\t\t\t");
-				printf("%d.",i);
-				if(socname[i][0]!='\0'){
-					printf("%s",socname[i]);
-					if(s[i]==1)
-						printf("√已选择");
-				}
-				else
-					printf("[空]");
-				printf("\n\n\n");}
+				if(q==i){
+					printf("\t\t<---    ");
+					printf("%d.",i);
+					if(socname[i][0]!='\0'){
+						printf("%s",socname[i]);
+						if(s[i]==1){
+							HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+							SetConsoleTextAttribute(hConsole, FOREGROUND_GREEN|FOREGROUND_INTENSITY|BACKGROUND_INTENSITY|BACKGROUND_BLUE|BACKGROUND_GREEN|BACKGROUND_RED);
+							printf("√已选择");
+							SetConsoleTextAttribute(hConsole, FOREGROUND_BLUE|FOREGROUND_INTENSITY|BACKGROUND_INTENSITY|BACKGROUND_BLUE|BACKGROUND_GREEN|BACKGROUND_RED);
+						}
+						else{
+							HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+							SetConsoleTextAttribute(hConsole, FOREGROUND_RED|FOREGROUND_INTENSITY|BACKGROUND_INTENSITY|BACKGROUND_BLUE|BACKGROUND_GREEN|BACKGROUND_RED);
+							printf("×未选择");
+							SetConsoleTextAttribute(hConsole, FOREGROUND_BLUE|FOREGROUND_INTENSITY|BACKGROUND_INTENSITY|BACKGROUND_BLUE|BACKGROUND_GREEN|BACKGROUND_RED);
+						}
+					}	
+					else
+						printf("[空]");
+					
+					printf("\t\t--->\n\n\n");}
+				else{
+					printf("\t\t\t");
+					printf("%d.",i);
+					if(socname[i][0]!='\0'){
+						printf("%s",socname[i]);
+						if(s[i]==1){
+							HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+							SetConsoleTextAttribute(hConsole, FOREGROUND_GREEN|FOREGROUND_INTENSITY|BACKGROUND_INTENSITY|BACKGROUND_BLUE|BACKGROUND_GREEN|BACKGROUND_RED);
+							printf("√已选择");
+							SetConsoleTextAttribute(hConsole, FOREGROUND_BLUE|FOREGROUND_INTENSITY|BACKGROUND_INTENSITY|BACKGROUND_BLUE|BACKGROUND_GREEN|BACKGROUND_RED);
+						}
+						else{
+							HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+							SetConsoleTextAttribute(hConsole, FOREGROUND_RED|FOREGROUND_INTENSITY|BACKGROUND_INTENSITY|BACKGROUND_BLUE|BACKGROUND_GREEN|BACKGROUND_RED);
+							printf("×未选择");
+							SetConsoleTextAttribute(hConsole, FOREGROUND_BLUE|FOREGROUND_INTENSITY|BACKGROUND_INTENSITY|BACKGROUND_BLUE|BACKGROUND_GREEN|BACKGROUND_RED);
+						}
+					}
+					else
+						printf("[空]");
+					
+					printf("\n\n\n");}
+				
 			}
-			if(q==6)
-				printf("\t\t<---    6.确认选择\t--->\n\n\n");
-			else
-				printf("\t\t\t6.确认选择\n\n\n");
+			
+			
+			
+			for(i=1;i<=5;i++){
+				if(s[i]==1){
+					if(q==6){
+						SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN|FOREGROUND_INTENSITY|BACKGROUND_INTENSITY|BACKGROUND_BLUE|BACKGROUND_GREEN|BACKGROUND_RED);
+						printf("\t\t<---    6.确认选择");
+						printf("√可用");
+						cango=1;
+						printf("\t--->\n\n\n");
+						SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE|FOREGROUND_INTENSITY|BACKGROUND_INTENSITY|BACKGROUND_BLUE|BACKGROUND_GREEN|BACKGROUND_RED);
+						break;
+					}
+					else{
+						SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN|FOREGROUND_INTENSITY|BACKGROUND_INTENSITY|BACKGROUND_BLUE|BACKGROUND_GREEN|BACKGROUND_RED);
+						
+						printf("\t\t\t6.确认选择");
+						
+						printf("√可用");
+						cango=1;
+						printf("\n\n\n");
+						SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE|FOREGROUND_INTENSITY|BACKGROUND_INTENSITY|BACKGROUND_BLUE|BACKGROUND_GREEN|BACKGROUND_RED);
+						break;
+					}
+				}
+				cango=0;
+				
+			}
+			
+			
+			if(cango==0){
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED|FOREGROUND_INTENSITY|BACKGROUND_INTENSITY|BACKGROUND_BLUE|BACKGROUND_GREEN|BACKGROUND_RED);
+				
+				printf("\t\t\t6.确认选择");
+				
+				printf("×不可用");
+				printf("\n\n\n");
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE|FOREGROUND_INTENSITY|BACKGROUND_INTENSITY|BACKGROUND_BLUE|BACKGROUND_GREEN|BACKGROUND_RED);
+			}
+			
+			
+			
+			
+			
+			
+			
+			
 			if(q==0)
 				printf("\t\t<---    0.退出录入\t--->\n\n\n");
 			else
 				printf("\t\t\t0.退出录入\n\n\n");
-
+			
 			printf("通过Tab和方向键可以轮换选择或直接输入数字，按下Enter来确认选择\n注意：一旦您选择了批量录入，请录入全部的信息,如需更改，请使用数据查询更改功能。");
 			fflush(stdin);
 			keyCode=getch();
 			if(keyCode==9){
 				if(nowselect==5)
-					nowselect=0;
-				else
-					nowselect=nowselect+1;
+					if(cango=0)
+						nowselect=0;
+					else
+						nowselect=6;
+					else
+						nowselect=nowselect+1;
 			}
 			else if(keyCode==13||keyCode==32){
 				if(nowselect==0){
+					system("color f9");
 					return 0;
 				}
 				for(i=1;i<=5;i++){
@@ -588,13 +658,16 @@ int socksadd2(){
 							scanf("%s",socname[i]);
 							fflush(stdin);
 						}
-						if(s[i]=0)
+						if(s[i]==0){
 							s[i]=1;
-						else
+						}
+						else{
 							s[i]=0;
+						}
 					}
 				}
 				if(nowselect==6){
+					system("color f9");
 					break;
 				}
 			}
@@ -602,11 +675,11 @@ int socksadd2(){
 				keyCode=getch();
 				if(keyCode==72)
 					if(nowselect==0)
-						nowselect=5;
+						nowselect=6;
 					else 
 						nowselect=nowselect-1;
 					if(keyCode==80)
-						if(nowselect==5)
+						if(nowselect==6)
 							nowselect=0;
 						else nowselect=nowselect+1;
 			}
@@ -615,14 +688,14 @@ int socksadd2(){
 			}
 		}
 		//选择结束
-	socksadd2c();
+		break;
 	}
+	socksadd2c();
 	
-
 	
 	//------------------------------------------------------------------------------------------------------
-
-
+	
+	
 }
 
 int socksadd2c(){
@@ -873,8 +946,8 @@ int tofile(){
 	}
 	rewind(fp);
 	return 0;
-
-
+	
+	
 }
 int fromfile(){
 	if((newfileopen)==NULL){
@@ -889,13 +962,13 @@ int fromfile(){
 	}
 	rewind(fp);
 	return 0;
-
+	
 }
 int savesetting(){
 	in=fopen("setting.txt","ab+");
 	rewind(in);
 	for(i=0;i<=5;i++){
-	fwrite(&socname[i],sizeof(socname[i]),1,in);
+		fwrite(&socname[i],sizeof(socname[i]),1,in);
 	}
 	fprintf(in,"%d",lastaddst);
 	rewind(in);
@@ -905,7 +978,7 @@ int readsetting(){
 	in=fopen("setting.txt","ab+");
 	rewind(in);
 	for(i=0;i<=5;i++){
-	fread(&socname[i],sizeof(socname[i]),1,in);
+		fread(&socname[i],sizeof(socname[i]),1,in);
 	}
 	fscanf(in,"%d",&lastaddst);
 	stunull=0;
