@@ -43,6 +43,7 @@ int changest(int a);
 int socksadd1(int a);
 int socksadd1c();
 int socksadd2();
+int socksadd2c();
 int tofile();
 int fromfile();
 int savesetting();
@@ -51,6 +52,7 @@ int readsetting();
 static char emptyc=' ',socname[6][100]={0};
 static int i,j,k,lastaddst,stunull=1;
 static int choosetype,choose;//对于是否选择，选择1：是，选择2：否，
+static int nowselect=1,q=1,s[6]={0};
 #define studentidlen 100
 #define studentnamelen 80
 #define fileopen fp=fopen("a.txt","ab+")
@@ -516,8 +518,107 @@ int socksadd1(int st){
 	
 }
 int socksadd2(){
+
+
+	//------------------------------------------------------------------------------------------------------
+
+	char keyCode;
+	system("color f0");
+	for(;;){
+		for(;;){
+			clear();
+			q=nowselect;
+			printf("请选择即将录入的成绩，按空格键或回车选择/取消选择");
+
+			for(i=1;i<=5;i++){
+			if(q==i){
+				printf("\n\n\n\t\t<---    ");
+				printf("%d.",i);
+				if(socname[i][0]!='\0'){
+					printf("%s",socname[i]);
+					if(s[i]==1)
+						printf("√已选择");
+				}	
+				else
+					printf("[空]");
+				printf("\t\t--->\n\n\n");}
+			else{
+				printf("\n\n\n\t\t\t");
+				printf("%d.",i);
+				if(socname[i][0]!='\0'){
+					printf("%s",socname[i]);
+					if(s[i]==1)
+						printf("√已选择");
+				}
+				else
+					printf("[空]");
+				printf("\n\n\n");}
+			}
+			if(q==6)
+				printf("\t\t<---    6.确认选择\t--->\n\n\n");
+			else
+				printf("\t\t\t6.确认选择\n\n\n");
+			if(q==0)
+				printf("\t\t<---    0.退出录入\t--->\n\n\n");
+			else
+				printf("\t\t\t0.退出录入\n\n\n");
+
+			printf("通过Tab和方向键可以轮换选择或直接输入数字，按下Enter来确认选择\n注意：一旦您选择了批量录入，请录入全部的信息,如需更改，请使用数据查询更改功能。");
+			fflush(stdin);
+			keyCode=getch();
+			if(keyCode==9){
+				if(nowselect==5)
+					nowselect=0;
+				else
+					nowselect=nowselect+1;
+			}
+			else if(keyCode==13||keyCode==32){
+		if(nowselect==0){
+			return 0;
+		}
+		for(i=1;i<=5;i++){
+		if(nowselect==i){
+			if(s[i]=1)
+				s[i]=0;
+			else
+				s[i]=1;
+		}
+		}
+		if(nowselect==6){
+			break;
+		}
+			}
+			else if(keyCode==-32){
+				keyCode=getch();
+				if(keyCode==72)
+					if(nowselect==0)
+						nowselect=5;
+					else 
+						nowselect=nowselect-1;
+					if(keyCode==80)
+						if(nowselect==5)
+							nowselect=0;
+						else nowselect=nowselect+1;
+			}
+			else if(keyCode-48<=5 &&keyCode-48>=0){
+				nowselect=keyCode-48;
+			}
+		}
+		//选择结束
+	socksadd2c();
+	}
+	
+
+	
+	//------------------------------------------------------------------------------------------------------
+
+
+}
+
+int socksadd2c(){
 	return 0;
 }
+
 
 
 int getsocks(){
