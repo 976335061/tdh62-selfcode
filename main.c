@@ -36,8 +36,9 @@ int getchoose();
 void mainpage();
 int newstudent();
 int newsocks();
-int getsocks();
-int getout();
+int getsocks(int a);
+int order();
+void out(int a);
 int checkchange();
 int changest(int a);
 int socksadd1(int a);
@@ -49,8 +50,8 @@ int fromfile();
 int savesetting();
 int readsetting();
 //变量声明
-static char emptyc=' ',socname[6][100]={0};
-static int i,j,k,lastaddst,lastaddsoc2=-1,stunull=1;
+static char emptyc=' ',socname[6][100]={0},keyCode;
+static int i,j,k,lastaddst=0,lastaddsoc2=-1,stunull=1;
 static int choosetype,choose;//对于是否选择，选择1：是，选择2：否，
 static int nowselect=1,q=1,s[6]={0,0,0,0,0,0};
 #define studentidlen 100
@@ -62,9 +63,10 @@ struct student {
 	char id[studentidlen];
 	char name[studentnamelen];
     int so[5];
-}stu[100];
+}stu[100],temp;
 FILE * fp;
 FILE * in;
+FILE * sout;
 
 
 //End
@@ -197,9 +199,9 @@ void mainpage(){
 			else 
 				printf("\t\t\t3.查看成绩\n\n\n");
 			if(q==4)
-				printf("\t\t<---    4.查看统计报表\t\t--->\n\n\n");
+				printf("\t\t<---    4.输出成绩表\t\t--->\n\n\n");
 			else
-				printf("\t\t\t4.查看统计报表\n\n\n");
+				printf("\t\t\t4.输出成绩表\n\n\n");
 			if(q==5)
 				printf("\t\t<---    5.数据查询更改\t\t--->\n\n\n");
 			else
@@ -253,10 +255,10 @@ void mainpage(){
 			newsocks();
 		}
 		if(nowselect==3){
-			getsocks();
+			getsocks(0);
 		}
 		if(nowselect==4){
-			getout();
+			getsocks(1);
 		}
 		if(nowselect==5){
 			if(stunull==1){
@@ -268,6 +270,7 @@ void mainpage(){
 		}
 	}
 } 
+
 //正式处理数据
 int newstudent(){
 	int oldlastaddst;
@@ -705,7 +708,7 @@ int socksadd2(){
 }
 
 int socksadd2c(){
-	int line=2,q1,q2,q3;
+	int line=2,q1,q2,q3,gsoc;
 	for(i=1;i<=5;i++){
 		if(s[i]==1)
 			line++;
@@ -736,7 +739,7 @@ int socksadd2c(){
 		if(lastaddsoc2!=-1)
 			q2=0;
 		else
-			q2=-1;
+			q2=lastaddsoc2;
 		if(q2+6>=lastaddst)
 			q3=lastaddst;
 		else
@@ -748,14 +751,12 @@ int socksadd2c(){
 		if(q2+6>=lastaddst)
 			q3=lastaddst;
 		else
-			q3=q2+6;
+			q3=q2+7;
 	}
 	
-	for(;;){
-		printf("\t\t成绩录入\n\n");
+	for(k=0;k<=lastaddst;k++){
 		clear();
-		if(lastaddst==lastaddsoc2)
-			break;
+		printf("\t\t成绩录入\n\n");
 		for(i=1;i<=line;i++)
 			printf("+---------------");
 		printf("\n");
@@ -766,32 +767,42 @@ int socksadd2c(){
 			}
 		}
 		printf("|\n");
-				if(q1>=0){
-
+		if(1){
+		/*未来继续完善，本次作业暂时不完成本显示
 		for(i=1;i<=line;i++)
-			printf("+---------------");
+		printf("+---------------");
 		printf("\n");
-		printf("%d%d%d",q1,q2,q3);
 		for(j=q1;j<=q2;j++){
-			printf("|\t%s\t+\t%s\t",stu[j].id,stu[j].name);
-			for(i=1;i<=5;i++){
+		printf("|\t%s\t+\t%s\t",stu[j].id,stu[j].name);
+		for(i=1;i<=5;i++){
+		if(s[i]==1){
+		}
+		}		printf("+\t%s\t",stu[j].so[i]);
+		
+		  printf("|\n");
+		  }
+		  
+			*/
+			
+			fflush(stdin);
+			printf("当前录入：\n");
+			printf("\t学号：%s\t姓名：%s\t\n请依次输入录入的信息",stu[k].id,stu[k].name);
+			for(i=0;i<=5;i++){
 				if(s[i]==1){
-					printf("+\t%s\t",stu[j].so[i]);
+					printf("%s：",socname[i]);
+					printf("\n");
+					fflush(stdin);
+					scanf("%d",&gsoc);
+					stu[j].so[i] = gsoc;
 				}
 			}
-			printf("|\n");
-		}
-			/*复制来,可能有用
-			fflush(stdin);
-			scanf("%d",&gsoc);
-			stu[j].so[st] = gsoc;
-			*/
+			
 			if(lastaddsoc2!=lastaddst-1){
 				printf("\t\t等待录入\n");
 				printf("\t\t----------------+----------------\n");
 				printf("\t\t|\t学号\t+\t姓名\t|\n");
 				printf("\t\t|---------------+---------------|\n");
-				for(j=q2+1;j<=q3;j++){
+				for(j=q2+2;j<=q3;j++){
 					printf("\t\t|\t%s\t+\t%s\t|\n",stu[j].id,stu[j].name);
 				}
 				printf("\t\t----------------+----------------\n");
@@ -806,7 +817,7 @@ int socksadd2c(){
 	}
 	fflush(stdin);
 	printf("录入完成，按任意键返回");
-	lastaddsoc2=-1;
+	lastaddsoc2++;
 	system("mode con cols=80 lines=35");
 	getch();
 	fflush(stdin);
@@ -815,13 +826,180 @@ int socksadd2c(){
 
 
 
-int getsocks(){
-	return 0;
-}
-int getout(){
-	return 0;
+int getsocks(int mod){
+	int line=2;
+	for(;;){
+		for(;;){
+			clear();
+			q=nowselect;
+			printf("请选择排序依据\n\n\n");
+			for(i=1;i<=5;i++){
+				if(socname[i][0]!='\0'){
+					if(q==i){
+						printf("\t\t<---    %d.",i);
+						printf("根据 %s 排序",socname[i]);
+						printf("\t\t--->\n\n");}
+					else{
+						printf("\t\t\t%d.",i);
+						printf("根据 %s 排序",socname[i]);
+						printf("\n\n");}
+				}
+			}
+			if(q==6){
+				printf("\t\t<---    6.");
+				printf("根据总分排序");
+				printf("\t\t--->\n\n");}
+			else{
+				printf("\t\t\t6.");
+				printf("根据总分排序");
+				printf("\n\n");}
+			if(q==0)
+				printf("\t\t<---    0.返回主页面\t--->\n\n\n");
+			else
+				printf("\t\t\t0.返回主页面\n\n\n");
+			printf("通过Tab和方向键可以轮换选择或直接输入数字，按下Enter来确认选择\n注意：一旦您选择了批量录入，请录入全部的信息,如需更改，请使用数据查询更改功能。");
+			fflush(stdin);
+			keyCode=getch();
+			if(keyCode==9){
+				if(nowselect==5)
+					nowselect=0;
+				else
+					nowselect=nowselect+1;
+			}
+			else if(keyCode==13){
+				break;
+			}
+			else if(keyCode==-32){
+				keyCode=getch();
+				if(keyCode==72)
+					if(nowselect==0)
+						nowselect=5;
+					else 
+						nowselect=nowselect-1;
+					if(keyCode==80)
+						if(nowselect==5)
+							nowselect=0;
+						else nowselect=nowselect+1;
+			}
+			else if(keyCode-48<=5 &&keyCode-48>=0){
+				nowselect=keyCode-48;
+			}
+		}
+		//选择结束
+		if(nowselect==0){
+			return 0;
+		}
+		if(nowselect==1){
+			order(1);
+		}
+		if(nowselect==2){
+			order(2);
+		}
+		if(nowselect==3){
+			order(3);
+		}
+		if(nowselect==4){
+			order(4);
+		}
+		if(nowselect==5){
+			order(5);
+		}
+	clear();
+		printf("\n\n\n\t\t\t调整中。。。");
+	for(i=1;i<=5;i++){
+		if(socname[i][0]!='\0')
+			line++;
+	}
+	//调整视觉效果
+	switch(line)
+	{
+    case 3:
+		system("mode con cols=51 lines=30");
+		break;
+    case 4:
+		system("mode con cols=66 lines=30");
+		break;
+    case 5:
+		system("mode con cols=81 lines=30");
+		break;
+    case 6:
+		system("mode con cols=98 lines=30");
+		break;
+    case 7:
+		system("mode con cols=113 lines=30");
+		break;
+    default:
+		system("mode con cols=81 lines=30");
+	}
+		Sleep(1000);
+		clear();
+		if(mod==1){
+				printf("处理中，请稍后\n");
+				sout = freopen("out.txt", "w", stdout);//输出重定向
+				}
+		out(line);
+		if(mod==1){
+			
+			
+		sout = freopen("CON", "w", stdout);//重新输出到屏幕
+		tofile();
+		savesetting();
+		printf("成绩报表保存到out.txt成功\n数据已经保存，如果返回之后显示出现问题请重启本程序");
+		
+		}
+		printf("按任意键返回主页面");
+		getchoose(3);
+
+		system("mode con cols=81 lines=30");
+		return 0;
 }
 
+
+}
+void out(int line){
+
+		for(i=1;i<=line;i++)
+			printf("+---------------");
+		printf("\n");
+		printf("|\t学号\t+\t姓名\t");
+		for(i=1;i<=5;i++){
+			if(socname[i][0]!='\0'){
+				printf("+\t%s\t",socname[i]);
+			}
+		}
+		printf("|\n");
+		for(i=0;i<=lastaddst;i++){
+			printf("|\t%s\t+\t%s\t",stu[i].id,stu[i].name);
+			for(j=1;j<=5;j++){
+				if(socname[j][0]!='\0'){
+					printf("+\t%d\t",stu[i].so[j]);
+							}
+							
+			}
+		printf("|\n");
+		}
+			for(i=1;i<=line;i++)
+			printf("+---------------");
+		
+		
+	}
+
+int order(int st){
+	for(i=0;i<100;i++){
+		if(st==6){
+		stu[i].so[0]=stu[i].so[1]+stu[i].so[2]+stu[i].so[3]+stu[i].so[4]+stu[i].so[5];
+		st=0;
+	}
+	}
+	for(i=0;i<100;i++)
+		for(j=i+1;j<100;j++)
+			if(stu[i].so[st]<stu[j].so[st]){
+				temp=stu[i];
+				stu[i]=stu[j];
+				stu[j]=temp;
+			}
+			return 0;
+}
 
 int checkchange(){
 	int exit=0,change=0;
@@ -1068,7 +1246,7 @@ int fromfile(){
 		getch();
 		return 0;
 	}
-	for(i=0;i<=100;i++){
+	for(i=0;i<=lastaddst;i++){
 		fread(&stu[i], sizeof(stu[i]),1,fp);
 	}
 	rewind(fp);
