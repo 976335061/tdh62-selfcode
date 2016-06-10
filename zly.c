@@ -1,6 +1,7 @@
 #include "stdio.h"
 #include "conio.h"
 #include "stdlib.h"
+#include "math.h"
 void welcome1();//导航界面1
 void welcome2();//2
 void choosesuccd();//流程界面1
@@ -13,7 +14,7 @@ void calcview2();//输出逐差界面
 void calcview3();//输出平均值
 void choosecalcul();//计算选择
 double average(double *,int);//平均值计算
-void calcul1();//逐差法求平均值及A
+double calcul1();//逐差法求平均值及A
 void calcul2();//求平均值及A
 void calcul3();//B类不确定度
 int next();
@@ -244,6 +245,7 @@ int guide3()//界面3，流程界面(控制)
 			return 0;//回车跳出循环
 	}
 	while(1);
+	return 0;
 }
 void welcome1()//输出界面
 {
@@ -372,6 +374,7 @@ int next()
 	if(num==89||num==121)
 	{
 		calcul2();
+		return 0;
 	}
 	if(num==110||num==78)
 		return 0;
@@ -524,3 +527,4 @@ void calcul3()	   /* 求B类不确定度 */
 			continue;
 		}
 	}
+}
